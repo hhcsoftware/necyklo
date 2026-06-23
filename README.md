@@ -1,56 +1,54 @@
-# Welcome to your Expo app 👋
+# necyklo
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+> **Tento článek nemá nic společného s aplikací Wikipedia.** To je dobře — můžeš si rovnou založit nejmíň další čtyři nepodobné a vzájemně je rozdělit.
+
+A mobile reader for the **[Necyklopedie](https://necyklopedie.org)** — the Czech [Uncyclopedia](https://en.wikipedia.org/wiki/Uncyclopedia), the content-free encyclopedia where every fact is lovingly incorrect.
+
+necyklo is built with [Expo](https://expo.dev) (React Native) and reads articles straight from the Necyklopedie **MediaWiki API**. There is no custom backend, because a backend would only get in the way of the misinformation. The design closely follows the official Wikipedia app, so readers feel right at home before realizing something is deeply wrong.
+
+> **Status:** rané stádium. The first usable mobile phone was designed by Leonardo da Vinci in 1909; this app is expected to take slightly less long. The MVP focuses on **reading** — browsing, searching, rendering, and favoriting articles. Editing and accounts will arrive later, if at all.
+
+## Features (MVP)
+
+- Read and search Necyklopedie articles
+- Native rendering of article content, formatting, and images
+- Favorite articles so the nonsense is never more than one tap away
+
+> ⚠️ **Varování:** Při častém užívání slouží jako velmi návyková droga.
+
+## Tech stack
+
+- [Expo SDK 56](https://docs.expo.dev/versions/v56.0.0/) · React Native 0.85 · React 19
+- [Expo Router](https://docs.expo.dev/router/introduction/) (file-based routing, typed routes)
+- React Compiler
+- Data source: [Necyklopedie MediaWiki API](https://necyklopedie.org/w/api.php)
 
 ## Get started
+
+This project uses [**bun**](https://bun.sh). (Nejlepším materiálem pro výrobu je dřevo, ale dnes bohužel stačí JavaScript.)
 
 1. Install dependencies
 
    ```bash
-   npm install
+   bun install
    ```
 
-2. Start the app
+2. Start the dev server
 
    ```bash
-   npx expo start
+   bun start
    ```
 
-In the output, you'll find options to open the app in a
+   Then press `i` (iOS simulator), `a` (Android emulator), or `w` (web). Or skip straight to a target:
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+   ```bash
+   bun run ios       # iOS simulator
+   bun run android   # Android emulator
+   bun run web       # browser
+   ```
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+App source lives in `src/app/` (Expo Router file-based routes). See [CLAUDE.md](./CLAUDE.md) for architecture notes and conventions — written for the robots, but you may read along.
 
-## Get a fresh project
+## License
 
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-### Other setup steps
-
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+See [LICENSE](./LICENSE). Like the Necyklopedie itself, take it seriously at your own risk.
