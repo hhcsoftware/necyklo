@@ -47,4 +47,4 @@ Zdrojový kód aplikace žije v `src/app/` (souborové routy Expo Routeru). Arch
 
 ## Licence
 
-Viz [LICENSE](./LICENSE). Stejně jako Necyklopedii samotnou ber i tohle vážně na vlastní nebezpečí.
+Viz [LICENSE](./LICENSE). Stejně jako Necyklopedii samotnou ber i tohle na vlastní nebezpečí.
