@@ -1,54 +1,54 @@
 # necyklo
 
-> **Tento článek nemá nic společného s aplikací Wikipedia.** To je dobře — můžeš si rovnou založit nejmíň další čtyři nepodobné a vzájemně je rozdělit.
+> **Tento článek nemá nic společného s aplikací Wikipedia.** To je dobře, můžeš si rovnou založit nejmíň další čtyři nepodobné a vzájemně je rozdělit.
 
-A mobile reader for the **[Necyklopedie](https://necyklopedie.org)** — the Czech [Uncyclopedia](https://en.wikipedia.org/wiki/Uncyclopedia), the content-free encyclopedia where every fact is lovingly incorrect.
+Mobilní čtečka pro **[Necyklopedii](https://necyklopedie.org)**, českou [Uncyclopedii](https://en.wikipedia.org/wiki/Uncyclopedia), encyklopedii bez obsahu, kde je každý fakt s láskou nesprávný.
 
-necyklo is built with [Expo](https://expo.dev) (React Native) and reads articles straight from the Necyklopedie **MediaWiki API**. There is no custom backend, because a backend would only get in the way of the misinformation. The design closely follows the official Wikipedia app, so readers feel right at home before realizing something is deeply wrong.
+necyklo je postavená na [Expu](https://expo.dev) (React Native) a čte články přímo z **MediaWiki API** Necyklopedie. Žádný vlastní backend tu není, protože backend by jen překážel šíření dezinformací. Vzhled se drží oficiální aplikace Wikipedia, takže se čtenář cítí jako doma, než mu dojde, že je něco hluboce špatně.
 
-> **Status:** rané stádium. The first usable mobile phone was designed by Leonardo da Vinci in 1909; this app is expected to take slightly less long. The MVP focuses on **reading** — browsing, searching, rendering, and favoriting articles. Editing and accounts will arrive later, if at all.
+> **Stav:** rané stádium. První použitelný mobil navrhnul Leonardo da Vinci už v roce 1909; tahle aplikace by to měla stihnout o něco rychleji. MVP se soustředí na **čtení**: procházení, vyhledávání, vykreslování a oblíbené články. Editace a účty přijdou později, pokud vůbec.
 
-## Features (MVP)
+## Funkce (MVP)
 
-- Read and search Necyklopedie articles
-- Native rendering of article content, formatting, and images
-- Favorite articles so the nonsense is never more than one tap away
+- Čtení a vyhledávání článků Necyklopedie
+- Nativní vykreslování obsahu, formátování a obrázků
+- Oblíbené články, aby ti nesmysly nikdy nebyly dál než jedno ťuknutí
 
 > ⚠️ **Varování:** Při častém užívání slouží jako velmi návyková droga.
 
-## Tech stack
+## Technologie
 
 - [Expo SDK 56](https://docs.expo.dev/versions/v56.0.0/) · React Native 0.85 · React 19
-- [Expo Router](https://docs.expo.dev/router/introduction/) (file-based routing, typed routes)
+- [Expo Router](https://docs.expo.dev/router/introduction/) (souborové routování, typované cesty)
 - React Compiler
-- Data source: [Necyklopedie MediaWiki API](https://necyklopedie.org/w/api.php)
+- Zdroj dat: [MediaWiki API Necyklopedie](https://necyklopedie.org/w/api.php)
 
-## Get started
+## Jak začít
 
-This project uses [**bun**](https://bun.sh). (Nejlepším materiálem pro výrobu je dřevo, ale dnes bohužel stačí JavaScript.)
+Projekt používá [**bun**](https://bun.sh). (Nejlepším materiálem pro výrobu je dřevo, ale dnes bohužel stačí JavaScript.)
 
-1. Install dependencies
+1. Nainstaluj závislosti
 
    ```bash
    bun install
    ```
 
-2. Start the dev server
+2. Spusť vývojový server
 
    ```bash
    bun start
    ```
 
-   Then press `i` (iOS simulator), `a` (Android emulator), or `w` (web). Or skip straight to a target:
+   Pak zmáčkni `i` (simulátor iOS), `a` (emulátor Android) nebo `w` (web). Nebo rovnou skoč na cílovou platformu:
 
    ```bash
-   bun run ios       # iOS simulator
-   bun run android   # Android emulator
-   bun run web       # browser
+   bun run ios       # simulátor iOS
+   bun run android   # emulátor Android
+   bun run web       # prohlížeč
    ```
 
-App source lives in `src/app/` (Expo Router file-based routes). See [CLAUDE.md](./CLAUDE.md) for architecture notes and conventions — written for the robots, but you may read along.
+Zdrojový kód aplikace žije v `src/app/` (souborové routy Expo Routeru). Architektura a konvence jsou popsané v [CLAUDE.md](./CLAUDE.md); psáno pro roboty, ale můžeš číst s nimi.
 
-## License
+## Licence
 
-See [LICENSE](./LICENSE). Like the Necyklopedie itself, take it seriously at your own risk.
+Viz [LICENSE](./LICENSE). Stejně jako Necyklopedii samotnou ber i tohle vážně na vlastní nebezpečí.
