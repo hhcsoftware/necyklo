@@ -1,12 +1,8 @@
 # necyklo
 
-> **Tento článek nemá nic společného s aplikací Wikipedia.** To je dobře, můžeš si rovnou založit nejmíň další čtyři nepodobné a vzájemně je rozdělit.
-
 Mobilní čtečka pro **[Necyklopedii](https://necyklopedie.org)**, českou [Uncyclopedii](https://en.wikipedia.org/wiki/Uncyclopedia), encyklopedii bez obsahu, kde je každý fakt s láskou nesprávný.
 
 necyklo je postavená na [Expu](https://expo.dev) (React Native) a čte články přímo z **MediaWiki API** Necyklopedie. Žádný vlastní backend tu není, protože backend by jen překážel šíření dezinformací. Vzhled se drží oficiální aplikace Wikipedia, takže se čtenář cítí jako doma, než mu dojde, že je něco hluboce špatně.
-
-> **Stav:** rané stádium. První použitelný mobil navrhnul Leonardo da Vinci už v roce 1909; tahle aplikace by to měla stihnout o něco rychleji. MVP se soustředí na **čtení**: procházení, vyhledávání, vykreslování a oblíbené články. Editace a účty přijdou později, pokud vůbec.
 
 ## Funkce (MVP)
 
@@ -25,7 +21,7 @@ necyklo je postavená na [Expu](https://expo.dev) (React Native) a čte články
 
 ## Jak začít
 
-Projekt používá [**bun**](https://bun.sh). (Nejlepším materiálem pro výrobu je dřevo, ale dnes bohužel stačí JavaScript.)
+Projekt používá [**bun**](https://bun.sh). (To je houska.)
 
 1. Nainstaluj závislosti
 
