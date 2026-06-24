@@ -54,7 +54,7 @@ big{font-size:1.05em;}
 
 /* Section headings: H2 in serif like the app; deeper levels bold sans. */
 h1{font-family:var(--serif);font-weight:400;}
-h2{font-family:var(--serif);font-weight:400;font-size:1.5em;line-height:1.22;margin:28px 0 11px;padding-top:16px;border-top:1px solid var(--border);text-wrap:balance;}
+h2{font-family:var(--serif);font-weight:400;font-size:1.5em;line-height:1.22;margin:30px 0 11px;text-wrap:balance;}
 h3{font-family:var(--sans);font-weight:700;font-size:1.2em;line-height:1.3;margin:22px 0 9px;text-wrap:balance;}
 h4{font-family:var(--sans);font-weight:700;font-size:1.0em;line-height:1.3;margin:18px 0 8px;text-wrap:balance;}
 .mw-headline{font:inherit;color:inherit;}
