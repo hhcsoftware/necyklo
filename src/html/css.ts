@@ -25,7 +25,7 @@ html{-webkit-text-size-adjust:100%;touch-action:manipulation;}
 [data-theme="light"]{--bg:${l.background};--fg:${l.text};--muted:${l.textMuted};--link:${l.link};--border:${l.border};--alt:${l.surfaceAlt};--new:${l.danger};--img-outline:rgba(0,0,0,0.1);}
 [data-theme="dark"]{--bg:${d.background};--fg:${d.text};--muted:${d.textMuted};--link:${d.link};--border:${d.border};--alt:${d.surfaceAlt};--new:${d.danger};--img-outline:rgba(255,255,255,0.1);}
 html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);}
-body{font-family:var(--sans);font-size:15px;line-height:1.55;padding:0 16px 96px;overflow-wrap:break-word;-webkit-font-smoothing:antialiased;}
+body{font-family:var(--sans);font-size:15px;line-height:1.55;padding:var(--top-pad,0) 16px 96px;overflow-wrap:break-word;-webkit-font-smoothing:antialiased;}
 main{max-width:720px;margin:0 auto;}
 a{color:var(--link);text-decoration:none;}
 a.new{color:var(--new);}
@@ -42,7 +42,7 @@ big{font-size:1.05em;}
 /* Full-bleed hero (the lead infobox image, promoted by the bridge). Excluded
    from the generic figure reset below so its negative margins survive and it
    spans edge to edge. Fixed height + cover guarantees full width. */
-.nec-hero{margin:0 -16px 16px;background:var(--alt);line-height:0;}
+.nec-hero{margin:calc(-1 * var(--top-pad,0)) -16px 16px;background:var(--alt);line-height:0;}
 .nec-hero img{display:block;width:100%;height:230px;object-fit:cover;border-radius:0;box-shadow:none;}
 
 /* Lead title block — serif title the Wikipedia app shows inline at the top of

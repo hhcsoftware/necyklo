@@ -22,6 +22,10 @@ interface Props {
   background: string;
   /** Rendered display title shown inline as the serif lead header. */
   titleHtml?: string;
+  /** Top safe-area inset (px) so content clears the floating header. */
+  topInset?: number;
+  /** Reports the vertical scroll offset (px) for the hide-on-scroll header. */
+  onScroll?: (offsetY: number) => void;
   /** Section anchor to scroll to once the page is ready. */
   initialAnchor?: string;
 }
@@ -31,6 +35,8 @@ export function ArticleWebView({
   scheme,
   background,
   titleHtml,
+  topInset,
+  onScroll,
   initialAnchor,
 }: Props) {
   const ref = useRef<WebView>(null);
@@ -85,11 +91,16 @@ export function ArticleWebView({
       ref={ref}
       originWhitelist={["*"]}
       source={{
-        html: buildArticleHtml(html, scheme, { titleHtml }),
+        html: buildArticleHtml(html, scheme, { titleHtml, topInset }),
         baseUrl: `${WIKI_ORIGIN}/`,
       }}
       injectedJavaScript={ARTICLE_BRIDGE}
       onMessage={handleMessage}
+      onScroll={
+        onScroll
+          ? (e) => onScroll(e.nativeEvent.contentOffset.y)
+          : undefined
+      }
       onShouldStartLoadWithRequest={(req) =>
         // Allow only the initial in-memory document; real navigations are
         // intercepted by the bridge, so block everything else.
@@ -105,6 +116,10 @@ export function ArticleWebView({
       bounces={false}
       overScrollMode="never"
       scalesPageToFit={false}
+      // Fill under the status bar so the hero bleeds to the top and content
+      // scrolls beneath the floating header (the body's top padding clears it).
+      contentInsetAdjustmentBehavior="never"
+      automaticallyAdjustContentInsets={false}
       style={[styles.web, { backgroundColor: background }]}
     />
   );
