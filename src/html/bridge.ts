@@ -65,26 +65,25 @@ export const ARTICLE_BRIDGE = `
   // Tame hand-styled notice/ambox boxes ("Tento článek ..."): a bordered,
   // ~80%-wide box with a floated icon, a thick white/black quote-bar, a big
   // left indent, and mild upsizing — all of which read badly on a phone.
+  function tameNoteBox(box) {
+    if (box.closest('.nec-note')) return;
+    box.classList.add('nec-note');
+    box.style.width = 'auto';
+    var inner = box.querySelectorAll('[style]');
+    for (var k = 0; k < inner.length; k++) {
+      var s = inner[k].style;
+      if (parseInt(s.borderLeftWidth, 10) >= 6) { s.borderLeftWidth = '3px'; s.borderLeftColor = ''; }
+      if (parseInt(s.marginLeft, 10) >= 40) { s.marginLeft = '0'; }
+      if (s.fontSize && s.fontSize.indexOf('%') > 0) {
+        var fp = parseInt(s.fontSize, 10);
+        if (fp > 100 && fp <= 145) s.fontSize = '';
+      }
+    }
+  }
   var noteBoxes = document.querySelectorAll(
     '.mw-parser-output center > div[style*="border"], .mw-parser-output div[style*="80%"][style*="border"]'
   );
-  for (var nb = 0; nb < noteBoxes.length; nb++) {
-    (function (box) {
-      if (box.closest('.nec-note')) return;
-      box.classList.add('nec-note');
-      box.style.width = 'auto';
-      var inner = box.querySelectorAll('[style]');
-      for (var k = 0; k < inner.length; k++) {
-        var s = inner[k].style;
-        if (parseInt(s.borderLeftWidth, 10) >= 6) { s.borderLeftWidth = '3px'; s.borderLeftColor = ''; }
-        if (parseInt(s.marginLeft, 10) >= 40) { s.marginLeft = '0'; }
-        if (s.fontSize && s.fontSize.indexOf('%') > 0) {
-          var fp = parseInt(s.fontSize, 10);
-          if (fp > 100 && fp <= 145) s.fontSize = '';
-        }
-      }
-    })(noteBoxes[nb]);
-  }
+  for (var nb = 0; nb < noteBoxes.length; nb++) tameNoteBox(noteBoxes[nb]);
 
   // Necyklopedie has no .infobox class — its "infoboxes" are bare <table>s
   // floated right / aligned / pinned to a narrow px width via inline styles.
@@ -170,7 +169,9 @@ export const ARTICLE_BRIDGE = `
     var fig = document.createElement('figure');
     fig.className = 'nec-hero';
     var heroImg = document.createElement('img');
-    heroImg.src = img.currentSrc || img.src;
+    // Use the original (full-size) file, not the ~254px infobox thumb, so the
+    // full-bleed retina band isn't a blurry upscale.
+    heroImg.src = fullImageUrl(img.currentSrc || img.src);
     var alt = img.getAttribute('alt');
     if (alt) heroImg.alt = alt;
     fig.appendChild(heroImg);
@@ -214,11 +215,25 @@ export const ARTICLE_BRIDGE = `
     })(thumbEls[gi]);
   }
 
+  // Some amboxes are tables, not divs (featured badges, "Tento článek" notices).
+  // Tame them like the div notes so they don't fall through to a scroll wrapper.
+  // Tight selector (class or 80%+border) so real data tables keep their wrapper.
+  var noteTables = document.querySelectorAll(
+    '.mw-parser-output table.boilerplate, .mw-parser-output table.metadata, .mw-parser-output table[style*="80%"][style*="border"]'
+  );
+  for (var nt = 0; nt < noteTables.length; nt++) {
+    var ntbl = noteTables[nt];
+    if (isSidebarTable(ntbl)) continue;
+    if (ntbl.parentElement && ntbl.parentElement.closest('table')) continue;
+    tameNoteBox(ntbl);
+  }
+
   var tables = document.querySelectorAll('.mw-parser-output table');
   for (var t = 0; t < tables.length; t++) {
     var tbl = tables[t];
-    // Skip nested tables and anything already relocated this pass.
+    // Skip nested tables and anything already relocated/tamed this pass.
     if (tbl.closest('.nec-scroll') || tbl.closest('.nec-collapsible-body')) continue;
+    if (tbl.classList.contains('nec-note')) continue;
     if (tbl.parentElement && tbl.parentElement.closest('table')) continue;
     if (isSidebarTable(tbl)) makeCard(tbl, summarize(tbl));
     else wrapScroll(tbl);

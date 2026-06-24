@@ -75,7 +75,8 @@ figure:not(.nec-hero),.thumb,.thumbinner,.tright,.tleft,.tnone,.floatright,.floa
 
 /* Runs of adjacent thumbnails → a swipeable horizontal gallery (grouped by the
    bridge) instead of a tall vertical stack of full-width images. */
-.nec-gallery{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;margin:0 -16px 16px;padding:0 16px;scrollbar-width:none;}
+.nec-gallery{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;margin:0 0 16px;padding:0;scrollbar-width:none;}
+.mw-parser-output > .nec-gallery{margin:0 -16px 16px;padding:0 16px;}
 .nec-gallery::-webkit-scrollbar{display:none;}
 .nec-gallery .thumb{flex:0 0 84%;width:84%!important;max-width:84%!important;margin:0!important;scroll-snap-align:center;}
 .nec-gallery .thumbinner{width:100%!important;max-width:none!important;}
@@ -90,7 +91,7 @@ li.gallerybox img{margin:0 auto;}
 
 /* Hand-styled notice/ambox boxes ("Tento článek ..."), tamed by the bridge:
    thin themed bar instead of a thick white/black one, no leftover indent. */
-.nec-note{width:auto!important;border:1px solid var(--border)!important;border-radius:8px;padding:11px 13px;margin:0 0 14px;font-size:0.94em;}
+.nec-note{width:auto!important;border:1px solid var(--border)!important;border-radius:8px;padding:11px 13px;margin:0 0 14px;font-size:0.94em;text-align:left;}
 .nec-note [style*="border-left"]{border-left-color:var(--border)!important;}
 .nec-note .image img,.nec-note img{box-shadow:none;margin:0 0 6px;}
 code,kbd,samp{font-size:0.92em;overflow-wrap:break-word;}
