@@ -44,9 +44,13 @@ export interface SearchHit {
   snippet: string;
 }
 
-export interface Suggestion {
+export interface SearchResult {
+  pageid: number;
   title: string;
-  description: string;
+  /** Thumbnail — carried by title (prefix) matches via pageimages. */
+  thumbnail?: string;
+  /** HTML snippet with <span class="searchmatch"> highlights — full-text matches. */
+  snippet?: string;
 }
 
 export interface RandomPage {

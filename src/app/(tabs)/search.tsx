@@ -22,7 +22,7 @@ export default function SearchScreen() {
   const query = useDebouncedValue(text.trim(), 280);
   const { data, isFetching } = useSearch(query);
 
-  const showEmpty = query.length > 0 && !isFetching && (data?.length ?? 0) === 0;
+  const showEmpty = query.length >= 2 && !isFetching && (data?.length ?? 0) === 0;
 
   return (
     <View
@@ -62,6 +62,7 @@ export default function SearchScreen() {
           <SearchResultRow
             title={item.title}
             snippet={item.snippet}
+            thumbnail={item.thumbnail}
             onPress={() =>
               router.push({
                 pathname: "/article/[title]",

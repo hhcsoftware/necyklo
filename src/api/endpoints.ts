@@ -5,7 +5,7 @@ import type {
   ParsedArticle,
   RandomPage,
   SearchHit,
-  Suggestion,
+  SearchResult,
 } from "@/api/types";
 
 export const MAIN_PAGE_TITLE = "Hlavní strana";
@@ -115,19 +115,86 @@ export async function searchArticles(
   return data.query?.search ?? [];
 }
 
-/** OpenSearch autocomplete. Returns a 4-element tuple, ignoring formatversion. */
-type OpenSearchResponse = [string, string[], string[], string[]];
+interface PrefixResponse {
+  query?: {
+    pages?: {
+      pageid: number;
+      title: string;
+      /** Prefix ranking position (generator results arrive unordered). */
+      index: number;
+      thumbnail?: { source: string };
+    }[];
+  };
+}
 
-export async function suggestArticles(
+/**
+ * Prefix (title) search with thumbnails. Unlike full-text, this matches
+ * partial queries — "Libe" resolves to "Liberec" — which the wiki's
+ * tokenized DB search (no CirrusSearch here) cannot do.
+ */
+export async function prefixSearchArticles(
   query: string,
   signal?: AbortSignal,
-): Promise<Suggestion[]> {
+): Promise<SearchResult[]> {
   if (!query.trim()) return [];
-  const [, titles = [], descriptions = []] = await apiRequest<OpenSearchResponse>(
-    { action: "opensearch", search: query, namespace: 0, limit: 10 },
+  const data = await apiRequest<PrefixResponse>(
+    {
+      action: "query",
+      generator: "prefixsearch",
+      gpssearch: query,
+      gpsnamespace: 0,
+      gpslimit: 10,
+      prop: "pageimages",
+      piprop: "thumbnail",
+      pithumbsize: 160,
+    },
     signal,
   );
-  return titles.map((title, i) => ({ title, description: descriptions[i] ?? "" }));
+  const pages = data.query?.pages ?? [];
+  return pages
+    .slice()
+    .sort((a, b) => a.index - b.index)
+    .map((p) => ({ pageid: p.pageid, title: p.title, thumbnail: p.thumbnail?.source }));
+}
+
+/**
+ * Combined search the UI uses: title (prefix) matches first — so partial
+ * queries resolve and carry thumbnails — then full-text content matches for
+ * related articles. Deduped by page id; a page found by both keeps its
+ * thumbnail and gains the full-text snippet.
+ */
+export async function searchEverything(
+  query: string,
+  signal?: AbortSignal,
+): Promise<SearchResult[]> {
+  if (!query.trim()) return [];
+  // Tolerate one source failing (e.g. a flaky full-text request) rather than
+  // dropping the whole search; only error if both fail.
+  const [prefixR, fullR] = await Promise.allSettled([
+    prefixSearchArticles(query, signal),
+    searchArticles(query, signal),
+  ]);
+  if (prefixR.status === "rejected" && fullR.status === "rejected") {
+    throw prefixR.reason;
+  }
+  const prefix = prefixR.status === "fulfilled" ? prefixR.value : [];
+  const full = fullR.status === "fulfilled" ? fullR.value : [];
+  const byId = new Map<number, SearchResult>();
+  const order: number[] = [];
+  for (const p of prefix) {
+    byId.set(p.pageid, { pageid: p.pageid, title: p.title, thumbnail: p.thumbnail });
+    order.push(p.pageid);
+  }
+  for (const f of full) {
+    const existing = byId.get(f.pageid);
+    if (existing) {
+      existing.snippet = f.snippet;
+    } else {
+      byId.set(f.pageid, { pageid: f.pageid, title: f.title, snippet: f.snippet });
+      order.push(f.pageid);
+    }
+  }
+  return order.map((id) => byId.get(id) as SearchResult);
 }
 
 interface RandomResponse {
