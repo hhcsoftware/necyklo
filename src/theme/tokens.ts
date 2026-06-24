@@ -33,14 +33,18 @@ export const palettes: Record<ColorScheme, Palette> = {
     tint: "#208aef",
     danger: "#d33",
   },
+  // True-black AMOLED dark theme (matches the Wikipedia app), neutral grays
+  // with no blue tint so it reads as black, not navy.
   dark: {
-    background: "#101418",
-    surface: "#1c1f24",
-    surfaceAlt: "#27292d",
-    text: "#f8f9fa",
-    textMuted: "#a2a9b1",
+    background: "#000000",
+    // Elevated tones must stay readable against pure black: surface lifts cards
+    // off the background, surfaceAlt is one step up for pressed/elevated state.
+    surface: "#1c1c1e",
+    surfaceAlt: "#262629",
+    text: "#f2f2f3",
+    textMuted: "#9ba1a6",
     link: "#6699ff",
-    border: "#3a3d42",
+    border: "#2a2a2d",
     tint: "#4aa3ff",
     danger: "#ff6b6b",
   },
