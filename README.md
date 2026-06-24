@@ -1,13 +1,21 @@
 # necyklo
 
+<p align="center">
+  <img src="assets/screenshots/homepage.png" alt="Domovská obrazovka s náhodnými články" width="42%" style="border: 14px solid #1c1c1e; border-radius: 32px; box-shadow: 0 8px 24px rgba(0,0,0,0.2);">
+  &nbsp;
+  <img src="assets/screenshots/article.png" alt="Čtení článku" width="42%" style="border: 14px solid #1c1c1e; border-radius: 32px; box-shadow: 0 8px 24px rgba(0,0,0,0.2);">
+</p>
+
+
 Mobilní čtečka pro **[Necyklopedii](https://necyklopedie.org)**, českou [Uncyclopedii](https://en.wikipedia.org/wiki/Uncyclopedia), encyklopedii bez obsahu, kde je každý fakt s láskou nesprávný.
 
 necyklo je postavená na [Expu](https://expo.dev) (React Native) a čte články přímo z **MediaWiki API** Necyklopedie. Žádný vlastní backend tu není, protože backend by jen překážel šíření dezinformací. Vzhled se drží oficiální aplikace Wikipedia, takže se čtenář cítí jako doma, než mu dojde, že je něco hluboce špatně.
 
 ## Funkce (MVP)
 
-- Čtení a vyhledávání článků Necyklopedie
-- Nativní vykreslování obsahu, formátování a obrázků
+- Čtení a vyhledávání článků Necyklopedie (našeptávač najde „Liberec", i když napíšeš jen „Libe")
+- Nativní vykreslování obsahu ve stylu aplikace Wikipedia: serifové nadpisy, galerie obrázků, sbalitelné infoboxy
+- Tmavý (AMOLED) režim, který se řídí nastavením systému
 - Oblíbené články, aby ti nesmysly nikdy nebyly dál než jedno ťuknutí
 
 > ⚠️ **Varování:** Při častém užívání slouží jako velmi návyková droga.
