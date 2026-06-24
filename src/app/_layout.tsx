@@ -22,7 +22,7 @@ export default function RootLayout() {
                 headerShown: false,
                 contentStyle: { backgroundColor: colors.background },
                 headerStyle: { backgroundColor: colors.surface },
-                headerTintColor: colors.tint,
+                headerTintColor: colors.text,
                 headerTitleStyle: { color: colors.text },
               }}
             >

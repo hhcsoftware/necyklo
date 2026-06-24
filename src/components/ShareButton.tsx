@@ -28,12 +28,13 @@ export function ShareButton({ title }: Props) {
       hitSlop={12}
       accessibilityRole="button"
       accessibilityLabel="Sdílet článek"
+      style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
     >
       <SymbolView
         name={{ ios: "square.and.arrow.up", android: "share", web: "share" }}
-        tintColor={colors.tint}
+        tintColor={colors.text}
         size={22}
-        fallback={<Text style={[styles.fallback, { color: colors.tint }]}>↗</Text>}
+        fallback={<Text style={[styles.fallback, { color: colors.text }]}>↗</Text>}
       />
     </Pressable>
   );

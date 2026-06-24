@@ -14,7 +14,9 @@ export function FavoriteButton({ title, displayTitle, thumbnail }: Props) {
   const { isFavorite, toggle } = useFavorites();
   const { colors } = useTheme();
   const active = isFavorite(title);
-  const color = active ? colors.tint : colors.textMuted;
+  // Neutral near-white when unsaved (like the Wikipedia app's header glyphs);
+  // brand accent only once saved.
+  const color = active ? colors.tint : colors.text;
 
   return (
     <Pressable
@@ -22,6 +24,7 @@ export function FavoriteButton({ title, displayTitle, thumbnail }: Props) {
       hitSlop={12}
       accessibilityRole="button"
       accessibilityLabel={active ? "Odebrat z oblíbených" : "Přidat do oblíbených"}
+      style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
     >
       <SymbolView
         name={active ? "star.fill" : "star"}

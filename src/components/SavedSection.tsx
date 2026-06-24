@@ -22,7 +22,13 @@ function SavedCard({ entry }: { entry: FavoriteEntry }) {
           params: { title: entry.title },
         })
       }
-      style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}
+      style={({ pressed }) => [
+        styles.card,
+        {
+          backgroundColor: pressed ? colors.surfaceAlt : colors.surface,
+          borderColor: colors.border,
+        },
+      ]}
     >
       {thumb ? (
         <Image source={thumb} style={styles.thumb} contentFit="cover" transition={120} />
