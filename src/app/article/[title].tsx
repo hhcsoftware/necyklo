@@ -24,7 +24,9 @@ export default function ArticleScreen() {
     <>
       <Stack.Screen
         options={{
-          title: headerTitle,
+          // Title renders inline in the article body (serif lead, like the
+          // Wikipedia app), so the nav bar stays title-less.
+          title: "",
           headerBackButtonDisplayMode: "minimal",
           headerRight: () => (
             <View style={styles.headerActions}>
@@ -46,6 +48,7 @@ export default function ArticleScreen() {
           html={article.data.html}
           scheme={scheme}
           background={colors.background}
+          titleHtml={article.data.displayTitle}
           initialAnchor={anchor}
         />
       )}

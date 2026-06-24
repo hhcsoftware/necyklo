@@ -20,11 +20,19 @@ interface Props {
   scheme: ColorScheme;
   /** Screen background, applied to the WebView to avoid a load flash. */
   background: string;
+  /** Rendered display title shown inline as the serif lead header. */
+  titleHtml?: string;
   /** Section anchor to scroll to once the page is ready. */
   initialAnchor?: string;
 }
 
-export function ArticleWebView({ html, scheme, background, initialAnchor }: Props) {
+export function ArticleWebView({
+  html,
+  scheme,
+  background,
+  titleHtml,
+  initialAnchor,
+}: Props) {
   const ref = useRef<WebView>(null);
 
   // Swap the theme in place (no reload) when the OS color scheme changes.
@@ -76,7 +84,10 @@ export function ArticleWebView({ html, scheme, background, initialAnchor }: Prop
     <WebView
       ref={ref}
       originWhitelist={["*"]}
-      source={{ html: buildArticleHtml(html, scheme), baseUrl: `${WIKI_ORIGIN}/` }}
+      source={{
+        html: buildArticleHtml(html, scheme, { titleHtml }),
+        baseUrl: `${WIKI_ORIGIN}/`,
+      }}
       injectedJavaScript={ARTICLE_BRIDGE}
       onMessage={handleMessage}
       onShouldStartLoadWithRequest={(req) =>
@@ -88,6 +99,12 @@ export function ArticleWebView({ html, scheme, background, initialAnchor }: Prop
       }
       javaScriptCanOpenWindowsAutomatically={false}
       setSupportMultipleWindows={false}
+      // Feel like a native screen, not a zoomable web page: no rubber-band
+      // overscroll (iOS `bounces` / Android `overScrollMode`) and no pinch
+      // zoom (also enforced via the viewport meta + a gesture blocker).
+      bounces={false}
+      overScrollMode="never"
+      scalesPageToFit={false}
       style={[styles.web, { backgroundColor: background }]}
     />
   );
