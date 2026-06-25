@@ -24,7 +24,7 @@ html{-webkit-text-size-adjust:100%;touch-action:manipulation;}
 }
 [data-theme="light"]{--bg:${l.background};--fg:${l.text};--muted:${l.textMuted};--link:${l.link};--border:${l.border};--alt:${l.surfaceAlt};--new:${l.danger};--img-outline:rgba(0,0,0,0.1);}
 [data-theme="dark"]{--bg:${d.background};--fg:${d.text};--muted:${d.textMuted};--link:${d.link};--border:${d.border};--alt:${d.surfaceAlt};--new:${d.danger};--img-outline:rgba(255,255,255,0.1);}
-html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);overflow-x:hidden;}
 body{font-family:var(--sans);font-size:15px;line-height:1.55;padding:var(--top-pad,0) 16px 96px;overflow-wrap:break-word;-webkit-font-smoothing:antialiased;}
 main{max-width:720px;margin:0 auto;}
 a{color:var(--link);text-decoration:none;}
@@ -95,6 +95,9 @@ li.gallerybox img{margin:0 auto;}
 .nec-note [style*="border-left"]{border-left-color:var(--border)!important;}
 .nec-note .image img,.nec-note img{box-shadow:none;margin:0 0 6px;}
 code,kbd,samp{font-size:0.92em;overflow-wrap:break-word;}
+/* Preformatted blocks (space-indented wikitext) must wrap, not force the whole
+   page wider than the screen. */
+pre{white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;max-width:100%;font-size:0.9em;line-height:1.45;margin:0 0 14px;}
 
 /* Any remaining wide table gets a horizontal-scroll wrapper from the bridge. */
 table{max-width:100%!important;font-size:0.95em;}
