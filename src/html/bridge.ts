@@ -9,7 +9,7 @@
  *   { type: 'image',     payload: { src, caption } }
  *   { type: 'reference', payload: { id, text } }
  *   { type: 'external',  payload: { url } }
- *   { type: 'ready',     payload: { height } }
+ *   { type: 'ready',     payload: { height, sections: [{ anchor, top }] } }
  *
  * Must end with `true;` (react-native-webview requirement).
  */
@@ -245,6 +245,18 @@ export const ARTICLE_BRIDGE = `
     return (el.textContent || '').replace(/\\s+/g, ' ').trim();
   }
 
+  // Smooth-scroll to a section, offset by the floating-header zone so the
+  // heading lands below it. Exposed so the native side (TOC, initial anchor)
+  // can drive it too.
+  function scrollToAnchor(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var pad = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--top-pad'), 10) || 0;
+    var y = el.getBoundingClientRect().top + (window.scrollY || window.pageYOffset || 0) - pad - 8;
+    window.scrollTo({ top: y < 0 ? 0 : y, behavior: 'smooth' });
+  }
+  window.necScrollToAnchor = scrollToAnchor;
+
   document.addEventListener('click', function (e) {
     var el = e.target;
     if (!el || !el.closest) return;
@@ -273,8 +285,7 @@ export const ARTICLE_BRIDGE = `
         var t = refText(id);
         if (t) { e.preventDefault(); post('reference', { id: id, text: t }); return; }
       }
-      var target = document.getElementById(id);
-      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+      if (document.getElementById(id)) { e.preventDefault(); scrollToAnchor(id); }
       return;
     }
 
@@ -296,7 +307,19 @@ export const ARTICLE_BRIDGE = `
     post('external', { url: a.href });
   }, true);
 
-  function ready() { post('ready', { height: document.body ? document.body.scrollHeight : 0 }); }
+  function ready() {
+    // Report section anchors + their document offsets so the native TOC can
+    // list them and highlight the one currently in view.
+    var sections = [];
+    var heads = document.querySelectorAll('.mw-headline');
+    for (var s = 0; s < heads.length; s++) {
+      var h = heads[s];
+      if (!h.id) continue;
+      var top = h.getBoundingClientRect().top + (window.scrollY || window.pageYOffset || 0);
+      sections.push({ anchor: h.id, top: Math.round(top) });
+    }
+    post('ready', { height: document.body ? document.body.scrollHeight : 0, sections: sections });
+  }
   if (document.readyState === 'complete') ready();
   else window.addEventListener('load', ready);
 })();

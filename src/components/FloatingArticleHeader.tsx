@@ -1,9 +1,6 @@
-import { GlassView, isLiquidGlassAvailable } from "expo-glass-effect";
 import { router } from "expo-router";
 import { SymbolView } from "expo-symbols";
-import type { ReactNode } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import type { StyleProp, ViewStyle } from "react-native";
+import { Pressable, StyleSheet, Text } from "react-native";
 import Animated, {
   useAnimatedStyle,
   type SharedValue,
@@ -11,11 +8,9 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { FavoriteButton } from "@/components/FavoriteButton";
+import { GlassPill } from "@/components/GlassPill";
 import { ShareButton } from "@/components/ShareButton";
 import { useTheme } from "@/theme/useTheme";
-
-// iOS 26+ only; stable per device, so resolve once.
-const LIQUID_GLASS = isLiquidGlassAvailable();
 
 interface Props {
   /** Canonical title — share + favorite key. */
@@ -45,7 +40,7 @@ export function FloatingArticleHeader({ title, displayTitle, hidden }: Props) {
       style={[styles.bar, { top: insets.top + 6 }, animatedStyle]}
       pointerEvents="box-none"
     >
-      <Pill style={styles.backPill}>
+      <GlassPill style={styles.backPill}>
         <Pressable
           onPress={() => router.back()}
           accessibilityRole="button"
@@ -59,41 +54,13 @@ export function FloatingArticleHeader({ title, displayTitle, hidden }: Props) {
             fallback={<Text style={[styles.fallback, { color: colors.text }]}>‹</Text>}
           />
         </Pressable>
-      </Pill>
+      </GlassPill>
 
-      <Pill style={styles.actionsPill}>
+      <GlassPill style={styles.actionsPill}>
         <ShareButton title={title} />
         <FavoriteButton title={title} displayTitle={displayTitle} />
-      </Pill>
+      </GlassPill>
     </Animated.View>
-  );
-}
-
-function Pill({ children, style }: { children: ReactNode; style?: StyleProp<ViewStyle> }) {
-  const { scheme, colors } = useTheme();
-  if (LIQUID_GLASS) {
-    return (
-      <GlassView glassEffectStyle="regular" isInteractive style={[styles.pill, style]}>
-        {children}
-      </GlassView>
-    );
-  }
-  // Pre-iOS-26 / non-iOS fallback: a theme-aware translucent pill.
-  return (
-    <View
-      style={[
-        styles.pill,
-        {
-          backgroundColor:
-            scheme === "dark" ? "rgba(40,40,43,0.6)" : "rgba(255,255,255,0.72)",
-          borderWidth: StyleSheet.hairlineWidth,
-          borderColor: colors.border,
-        },
-        style,
-      ]}
-    >
-      {children}
-    </View>
   );
 }
 
@@ -107,7 +74,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     zIndex: 10,
   },
-  pill: { borderRadius: 22, overflow: "hidden", justifyContent: "center" },
   backPill: { width: 44, height: 44, alignItems: "center" },
   actionsPill: {
     height: 44,
